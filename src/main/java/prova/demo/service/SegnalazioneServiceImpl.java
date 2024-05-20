@@ -8,6 +8,7 @@ import prova.demo.mapper.SegnalazioneMapper;
 import prova.demo.repository.SegnalazioneRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +20,15 @@ public class SegnalazioneServiceImpl implements SegnalazioneService {
     private SegnalazioneMapper segnalazioneMap;
 
     @Override
-    public List<SegnalazioneDTO> segnalazioneList() {
-        List<Segnalazione> listSegnalazioni = segnalazioneRepo.findAll();
+    public List<SegnalazioneDTO> segnalazioneList(String cognome, LocalDate creation) {
+        List<Segnalazione> listSegnalazioni = new ArrayList<>();
+        if(cognome != null && creation != null){
+            listSegnalazioni = segnalazioneRepo.findByClienteCognomeAndCreation(cognome, creation);
+        } else if (cognome == null && creation != null) {
+            listSegnalazioni = segnalazioneRepo.findByCreation(creation);
+        } else if (cognome != null) {
+            listSegnalazioni = segnalazioneRepo.findByClienteCognome(cognome);
+        }
         return listSegnalazioni.stream().map(segnalazione -> segnalazioneMap.EntityToDTO(segnalazione)).toList();
     }
 

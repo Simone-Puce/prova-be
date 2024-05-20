@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import prova.demo.dto.SegnalazioneDTO;
 import prova.demo.service.SegnalazioneService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -19,8 +20,8 @@ public class SegnalazioneController {
     private SegnalazioneService segnalazioneService;
 
     @GetMapping(value = "/getall")
-    public ResponseEntity<List<SegnalazioneDTO>> getAllSegnalazioni() {
-        return new ResponseEntity<>(segnalazioneService.segnalazioneList(), OK);
+    public ResponseEntity<List<SegnalazioneDTO>> getAllSegnalazioni(@RequestParam(required = false) String cognome, @RequestParam(required = false)LocalDate creation) {
+        return new ResponseEntity<>(segnalazioneService.segnalazioneList(cognome, creation), OK);
     }
 
     @PostMapping(value = "/create")
