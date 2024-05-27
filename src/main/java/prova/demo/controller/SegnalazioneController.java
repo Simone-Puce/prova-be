@@ -19,19 +19,18 @@ public class SegnalazioneController {
     @Autowired
     private SegnalazioneService segnalazioneService;
 
-    @GetMapping(value = "/getall")
-    public ResponseEntity<List<SegnalazioneDTO>> getAllSegnalazioni(@RequestParam(required = false) String cognome, @RequestParam(required = false)LocalDate creation) {
-        return new ResponseEntity<>(segnalazioneService.segnalazioneList(cognome, creation), OK);
+    @GetMapping
+    public ResponseEntity<List<SegnalazioneDTO>> getSegnalazioni(@RequestParam(required = false) LocalDate dataAssunzione, @RequestParam(required = false) String emailCliente){
+        return new ResponseEntity<>(segnalazioneService.getSegnalazioni(dataAssunzione,emailCliente), OK);
     }
 
-    @PostMapping(value = "/create")
-    public ResponseEntity<Boolean> createSegnalazione(@RequestBody SegnalazioneDTO segnalazioneDTO) {
+    @PostMapping
+    public ResponseEntity<SegnalazioneDTO> createSegnalazione(@RequestBody SegnalazioneDTO segnalazioneDTO) {
         return new ResponseEntity<>(segnalazioneService.createSegnalazione(segnalazioneDTO), OK);
     }
 
-    @DeleteMapping(value = "/delete")
-    public ResponseEntity<Boolean> deleteSegnalazione(@RequestParam Long id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deleteSegnalazione(@PathVariable Integer id){
         return new ResponseEntity<>(segnalazioneService.deleteSegnalazione(id), OK);
     }
-
 }

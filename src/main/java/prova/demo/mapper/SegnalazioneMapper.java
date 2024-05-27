@@ -13,22 +13,21 @@ public class SegnalazioneMapper {
     @Autowired
     private TecnicoMapper tecnicoMapper;
 
-    public SegnalazioneDTO EntityToDTO (Segnalazione segnalazione) {
+    public SegnalazioneDTO entityToDTO(Segnalazione segnalazione) {
         return new SegnalazioneDTO(
-                segnalazione.getId(),
-                segnalazione.getDescrizione(),
+                segnalazione.getIdSegnalazione(),
                 clienteMapper.entityToDTO(segnalazione.getCliente()),
                 tecnicoMapper.entityToDTO(segnalazione.getTecnico()),
-                segnalazione.getCreation()
+                segnalazione.getDataOra()
+
         );
     }
 
     public Segnalazione DTOToEntity(SegnalazioneDTO segnalazioneDTO) {
-        Segnalazione newSegnalazione = new Segnalazione();
-        newSegnalazione.setDescrizione(segnalazioneDTO.getDescrizione());
-        newSegnalazione.setCliente(clienteMapper.DTOToEntity(segnalazioneDTO.getCliente()));
-        newSegnalazione.setTecnico(tecnicoMapper.DTOToEntity(segnalazioneDTO.getTecnico()));
-        newSegnalazione.setCreation(segnalazioneDTO.getCreation());
-        return newSegnalazione;
+        Segnalazione segnalazione = new Segnalazione();
+        segnalazione.setTecnico(tecnicoMapper.DTOToEntity(segnalazioneDTO.getTecnico()));
+        segnalazione.setCliente(clienteMapper.DTOToEntity(segnalazioneDTO.getCliente()));
+        segnalazione.setDataOra(segnalazioneDTO.getDataOra());
+        return segnalazione;
     }
 }

@@ -6,9 +6,11 @@ import prova.demo.entity.Segnalazione;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface SegnalazioneRepository extends JpaRepositoryImplementation<Segnalazione, Long> {
 
-    List<Segnalazione> findByClienteCognome(String cognome);
-    List<Segnalazione> findByCreation(LocalDate creation);
-    List<Segnalazione> findByClienteCognomeAndCreation(String cognome, LocalDate creation);
+public interface SegnalazioneRepository extends JpaRepositoryImplementation<Segnalazione, Integer> {
+
+    List<Segnalazione> findByClienteEmail(String emailCliente);
+    List<Segnalazione> findByTecnicoDataAssunzione(LocalDate dataAssunzione);
+    List<Segnalazione> findByTecnicoDataAssunzioneAndClienteEmail(LocalDate dataAssunzione, String emailCliente);
+
 }

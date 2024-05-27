@@ -8,38 +8,41 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-    @Column(name = "nome")
+    @Column(name = "id_cliente")
+    private Integer idCliente;
+    @Column(name = "nome", length = 30)
     private String nome;
-    @Column(name = "cognome")
+    @Column(name = "cognome", length = 30)
     private String cognome;
-    @Column(name = "email")
+    @Column(name = "email", length = 50)
     private String email;
+    @Column(name = "telefono", length = 15)
+    private String telefono;
 
-    public Cliente(long id, String nome, String cognome, String email) {
-        this.id = id;
+    public Cliente () {}
+
+    public Cliente(Integer idCliente, String nome, String cognome, String email, String telefono) {
+        this.idCliente = idCliente;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+        this.telefono = telefono;
     }
 
-    public Cliente(){}
-
-    public long getId() {
-        return id;
+    public Integer getIdCliente() {
+        return idCliente;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNome() {
+        return nome;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCognome() {
@@ -50,11 +53,19 @@ public class Cliente {
         this.cognome = cognome;
     }
 
-    public String getNome() {
-        return nome;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

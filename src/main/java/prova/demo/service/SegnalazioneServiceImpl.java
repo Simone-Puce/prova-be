@@ -8,41 +8,44 @@ import prova.demo.mapper.SegnalazioneMapper;
 import prova.demo.repository.SegnalazioneRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SegnalazioneServiceImpl implements SegnalazioneService {
 
+    private final static String messaggioEliminazione = "Segnalazione eliminata";
     @Autowired
-    private SegnalazioneRepository segnalazioneRepo;
+    private SegnalazioneRepository segnalazioneRepository;
     @Autowired
-    private SegnalazioneMapper segnalazioneMap;
+    private SegnalazioneMapper segnalazioneMapper;
 
     @Override
-    public List<SegnalazioneDTO> segnalazioneList(String cognome, LocalDate creation) {
+    public List<SegnalazioneDTO> getSegnalazioni(LocalDate assunzioneTecnico, String emailCliente) {
         List<Segnalazione> listSegnalazioni = new ArrayList<>();
-        if(cognome != null && creation != null){
-            listSegnalazioni = segnalazioneRepo.findByClienteCognomeAndCreation(cognome, creation);
-        } else if (cognome == null && creation != null) {
-            listSegnalazioni = segnalazioneRepo.findByCreation(creation);
-        } else if (cognome != null) {
-            listSegnalazioni = segnalazioneRepo.findByClienteCognome(cognome);
+        if(assunzioneTecnico != null && emailCliente != null){
+            listSegnalazioni = segnalazioneRepository.findByTecnicoDataAssunzioneAndClienteEmail(assunzioneTecnico, emailCliente);
+        } else if (assunzioneTecnico != null) {
+            listSegnalazioni = segnalazioneRepository.findByTecnicoDataAssunzione(assunzioneTecnico);
+        } else if( emailCliente != null) {
+            listSegnalazioni = segnalazioneRepository.findByClienteEmail(emailCliente);
+        }else {
+            listSegnalazioni = segnalazioneRepository.findAll();
         }
-        return listSegnalazioni.stream().map(segnalazione -> segnalazioneMap.EntityToDTO(segnalazione)).toList();
+        return listSegnalazioni.stream().map(segnalazione -> segnalazioneMapper.entityToDTO(segnalazione)).toList();
     }
 
     @Override
-    public boolean createSegnalazione(SegnalazioneDTO segnalazioneDTO) {
-        Segnalazione newSegnalazione = segnalazioneMap.DTOToEntity(segnalazioneDTO);
-        newSegnalazione.setCreation(LocalDate.now());
-        segnalazioneRepo.save(newSegnalazione);
-        return true;
+    public SegnalazioneDTO createSegnalazione(SegnalazioneDTO segnalazioneDTO) {
+        segnalazioneDTO.setDataOra(LocalDateTime.now());
+        segnalazioneRepository.save(segnalazioneMapper.DTOToEntity(segnalazioneDTO));
+        return segnalazioneDTO;
     }
 
     @Override
-    public boolean deleteSegnalazione(Long idSegnalazione) {
-        segnalazioneRepo.deleteById(idSegnalazione);
-        return true;
+    public String deleteSegnalazione(Integer id) {
+        segnalazioneRepository.deleteById(id);
+        return messaggioEliminazione;
     }
 }

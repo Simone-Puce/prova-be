@@ -1,10 +1,8 @@
 package prova.demo.entity;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "segnalazioni")
@@ -12,45 +10,32 @@ public class Segnalazione {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "descrizione")
-    private String descrizione;
-
+    @Column(name = "id_segnalazione")
+    private Integer idSegnalazione;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn( name = "cliente_id", nullable = false)
+    @JoinColumn( name = "id_cliente", nullable = false)
     private Cliente cliente;
-
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn( name = "tecnico_id", nullable = false)
+    @JoinColumn(name = "id_tecnico", nullable = false)
     private Tecnico tecnico;
+    @Column(name = "data_ora")
+    private LocalDateTime dataOra;
 
-    @Column(name = "creation_date")
-    private LocalDate creation;
+    public Segnalazione () {}
 
-    public Segnalazione(long id, String descrizione, Cliente cliente, Tecnico tecnico, LocalDate creation) {
-        this.id = id;
-        this.descrizione = descrizione;
-        this.cliente = cliente;
+    public Segnalazione(Integer idSegnalazione, LocalDateTime dataOra, Tecnico tecnico, Cliente cliente) {
+        this.idSegnalazione = idSegnalazione;
+        this.dataOra = dataOra;
         this.tecnico = tecnico;
-        this.creation = creation;
+        this.cliente = cliente;
     }
 
-    public Segnalazione() {}
-
-    public long getId() {
-        return id;
+    public Integer getIdSegnalazione() {
+        return idSegnalazione;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setIdSegnalazione(Integer idSegnalazione) {
+        this.idSegnalazione = idSegnalazione;
     }
 
     public Cliente getCliente() {
@@ -69,11 +54,11 @@ public class Segnalazione {
         this.tecnico = tecnico;
     }
 
-    public LocalDate getCreation() {
-        return creation;
+    public LocalDateTime getDataOra() {
+        return dataOra;
     }
 
-    public void setCreation(LocalDate creation) {
-        this.creation = creation;
+    public void setDataOra(LocalDateTime dataOra) {
+        this.dataOra = dataOra;
     }
 }

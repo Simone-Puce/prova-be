@@ -1,41 +1,32 @@
 package prova.demo.dto;
 
-import prova.demo.entity.Cliente;
-import prova.demo.entity.Tecnico;
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 
 public class SegnalazioneDTO {
 
-    private Long id;
-    private String descrizione;
+    private Integer idSegnalazione;
     private ClienteDTO cliente;
     private TecnicoDTO tecnico;
-    private LocalDate creation;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dataOra;
 
-    public SegnalazioneDTO() {}
+    public SegnalazioneDTO () {}
 
-    public SegnalazioneDTO(Long id, String descrizione, ClienteDTO cliente, TecnicoDTO tecnico, LocalDate creation) {
-        this.id = id;
-        this.descrizione = descrizione;
+    public SegnalazioneDTO(Integer idSegnalazione, ClienteDTO cliente, TecnicoDTO tecnico, LocalDateTime dataOra) {
+        this.idSegnalazione = idSegnalazione;
         this.cliente = cliente;
         this.tecnico = tecnico;
-        this.creation = creation;
+        this.dataOra = dataOra;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getIdSegnalazione() {
+        return idSegnalazione;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setIdSegnalazione(Integer idSegnalazione) {
+        this.idSegnalazione = idSegnalazione;
     }
 
     public ClienteDTO getCliente() {
@@ -54,11 +45,11 @@ public class SegnalazioneDTO {
         this.tecnico = tecnico;
     }
 
-    public LocalDate getCreation() {
-        return creation;
+    public LocalDateTime getDataOra() {
+        return dataOra;
     }
 
-    public void setCreation(LocalDate creation) {
-        this.creation = creation;
+    public void setDataOra(LocalDateTime dataOra) {
+        this.dataOra = dataOra;
     }
 }

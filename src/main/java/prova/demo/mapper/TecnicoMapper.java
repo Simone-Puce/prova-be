@@ -7,18 +7,26 @@ import prova.demo.entity.Tecnico;
 @Component
 public class TecnicoMapper {
 
-    public TecnicoDTO entityToDTO (Tecnico tecnico) {
+    public TecnicoDTO entityToDTO(Tecnico tecnico) {
         return new TecnicoDTO(
-                tecnico.getId(),
+                tecnico.getIdTecnico(),
                 tecnico.getNome(),
-                tecnico.getCognome()
+                tecnico.getCognome(),
+                tecnico.getEmail(),
+                tecnico.getTelefono(),
+                tecnico.getSpecializzazione(),
+                tecnico.getDataAssunzione()
         );
     }
 
     public Tecnico DTOToEntity(TecnicoDTO tecnicoDTO) {
-        Tecnico newTecnico = new Tecnico();
-        newTecnico.setNome(tecnicoDTO.getNome());
-        newTecnico.setCognome(tecnicoDTO.getCognome());
-        return newTecnico;
+        Tecnico tecnico = new Tecnico();
+        tecnico.setNome(tecnicoDTO.getNome());
+        tecnico.setCognome(tecnicoDTO.getCognome());
+        tecnico.setEmail(tecnicoDTO.getEmail());
+        tecnico.setSpecializzazione(tecnicoDTO.getSpecializzazione());
+        tecnico.setDataAssunzione(tecnicoDTO.getDataAssunzione());
+        tecnico.setTelefono(tecnicoDTO.getTelefono());
+        return tecnico;
     }
 }
